@@ -1,8 +1,6 @@
 # fuxa-widget-library
 
-A community-driven collection of **multi-state SVG widgets** for [FUXA](https://github.com/frangoteam/FUXA), the open-source web-based SCADA visualization tool.
-
-This library helps you build visually rich dashboards using categorized, ready-to-use SVG graphics.
+This library contains a collection of SVG-based multi-state symbols specifically designed for use in [FUXA](https://github.com/frangoteam/FUXA) industrial HMI/SCADA dashboards — focused on mining and material handling processes.
 
 ---
 
@@ -14,27 +12,14 @@ This library helps you build visually rich dashboards using categorized, ready-t
 
 ---
 
-## How to Install Widgets in FUXA
+## Installation
 
-1. **Download or Clone this Repository**
-   ```bash
-   git clone https://github.com/carlbomsdata/fuxa-widget-library.git
-   ```
+To install these widgets in your FUXA project:
 
-2. **Locate the FUXA widgets folder**
-   This is located at:
-   ```
-   /server/_widgets/
-   ```
-
-3. **Paste Widgets inside the _widgets folder**
-   Copy eg the `mining` folder into the FUXA `_widgets` folder.
-
-4. **Use in FUXA**
-   - Open the FUXA editor.
-   - Add a **MultiState** widget to your view.
-   - Choose your uploaded SVG file as the symbol.
-   - Bind a variable to control the state changes.
+1. Download or clone this repository.
+2. Place the eg the `mining/` folder inside FUXA’s widget directory (`/server/_widgets/`).
+3. Refresh the browser tab running the FUXA editor.
+4. Insert the SVG widgets via the FUXA editor under the Widgets pane.
 ---
 
 ## Request New Widgets
@@ -45,3 +30,61 @@ Want a specific symbol or have an idea?
 - Or contribute your own SVGs via a pull request.
 
 ---
+
+## Widget Previews
+
+### [`mining/`](./mining)
+
+All widgets are located in the `mining/` folder and support dynamic state-based color changes.
+
+| Widget | Preview |
+|--------|---------|
+| cone-crusher | ![](mining/cone-crusher.svg) |
+| conveyor-3d-left | ![](mining/conveyor-3d-left.svg) |
+| conveyor-3d-right | ![](mining/conveyor-3d-right.svg) |
+| conveyor-feeder | ![](mining/conveyor-feeder.svg) |
+| conveyor-long | ![](mining/conveyor-long.svg) |
+| conveyor-medium | ![](mining/conveyor-medium.svg) |
+| conveyor-medium2 | ![](mining/conveyor-medium2.svg) |
+| conveyor-short | ![](mining/conveyor-short.svg) |
+| feeder-hopper | ![](mining/feeder-hopper.svg) |
+| feeder-left | ![](mining/feeder-left.svg) |
+| feeder-left2 | ![](mining/feeder-left2.svg) |
+| feeder-right | ![](mining/feeder-right.svg) |
+| filter | ![](mining/filter.svg) |
+| gyratory-crusher | ![](mining/gyratory-crusher.svg) |
+| hopper-flat | ![](mining/hopper-flat.svg) |
+| hopper-round | ![](mining/hopper-round.svg) |
+| motor | ![](mining/motor.svg) |
+| screen | ![](mining/screen.svg) |
+| screen2 | ![](mining/screen2.svg) |
+
+---
+
+### 🔧 Multi-State Logic and Behavior
+
+Each widget supports dynamic visuals based on a set of predefined state variables embedded in the SVG script block.
+Below is shown the most important state variables that you can bind directly in FUXA editor.
+
+#### `_pn_setState` (Number)
+
+Controls the current state of the widget. Used to change fill color based on system condition.
+
+| `_pn_setState` | Color     | Preview | Description            |
+|----------------|-----------|---------|------------------------|
+| `0`            | `#ffffff` | ⬜️       | Inactive / Neutral     |
+| `1`            | `#00ff00` | 🟩       | Running / OK           |
+| `2`            | `#ff9500` | 🟧       | Warning                |
+| `3`            | `#ff0000` | 🟥       | Blinking Alarm / Fault          |
+| `4`            | `#3c3c3c` | ⬛️       | Stopped / Offline      |
+| `5`            | `#dcdcdc` | ◻️       | Disconnected / Unknown |
+
+---
+
+#### `_pn_indicationMode` (Number)
+
+Controls how the visual indication is rendered:
+
+- `0`: Fill only (default)
+- `1`: Stroke only
+- `2`: Fill + Stroke
