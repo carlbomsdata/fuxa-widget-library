@@ -35,7 +35,7 @@ Want a specific symbol or have an idea?
 
 ### [`mining/`](./mining)
 
-All widgets are located in the `mining/` folder and support dynamic state-based color changes.
+All widgets that are located in the `mining/` folder support dynamic state-based color changes.
 
 | Widget | Preview |
 |--------|---------|
@@ -63,7 +63,6 @@ All widgets are located in the `mining/` folder and support dynamic state-based 
 
 ### 🔧 Multi-State Logic and Behavior
 
-Each widget supports dynamic visuals based on a set of predefined state variables embedded in the SVG script block.
 Below is shown the most important state variables that you can bind directly in FUXA editor.
 
 #### `_pn_setState` (Number)
