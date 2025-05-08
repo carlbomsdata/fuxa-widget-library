@@ -18,7 +18,7 @@ This library contains a collection of SVG-based multi-state symbols specifically
 To install these widgets in your FUXA project:
 
 1. Download or clone this repository.
-2. Place the eg the `mining/` folder inside FUXA’s widget directory (`/server/_widgets/`).
+2. Place eg the `mining/` folder inside FUXA’s widget directory (`/server/_widgets/`).
 3. Refresh the browser tab running the FUXA editor.
 4. Insert the SVG widgets via the FUXA editor under the Widgets pane.
 ---
