@@ -32,7 +32,7 @@ This library helps you build visually rich dashboards using categorized, ready-t
 
 3. **Copy Widgets**
 
-   Copy the desired eg the `mining` folder into the FUXA `_widgets` folder.
+   Copy eg the `mining` folder into the FUXA `_widgets` folder.
 
 4. **Use in FUXA**
 
