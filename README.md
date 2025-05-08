@@ -17,39 +17,31 @@ This library helps you build visually rich dashboards using categorized, ready-t
 ## How to Install Widgets in FUXA
 
 1. **Download or Clone this Repository**
-
    ```bash
    git clone https://github.com/carlbomsdata/fuxa-widget-library.git
    ```
 
-2. **Locate the FUXA Widgets Folder**
-
+2. **Locate the FUXA widgets folder**
    This is located at:
-
    ```
    /server/_widgets/
    ```
 
-3. **Copy Widgets**
-
+3. **Paste Widgets inside the _widgets folder**
    Copy eg the `mining` folder into the FUXA `_widgets` folder.
 
 4. **Use in FUXA**
-
    - Open the FUXA editor.
-   - Add a **MultiState** widget to your drawing.
+   - Add a **MultiState** widget to your view.
    - Choose your uploaded SVG file as the symbol.
    - Bind a variable to control the state changes.
-
-All multi-state SVGs in this repository are named and structured to work directly with FUXA's dynamic state system.
-
 ---
 
 ## Request New Widgets
 
 Want a specific symbol or have an idea?
 
-- [Open an issue](https://github.com/carlbomsdata/fuxa-widget-library/issues) with a description and (if possible) a reference image.
+- [Open an issue](https://github.com/tobias-carlbom/fuxa-widget-library/issues) with a description and (if possible) a reference image.
 - Or contribute your own SVGs via a pull request.
 
 ---
