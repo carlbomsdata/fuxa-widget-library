@@ -31,7 +31,7 @@ Want a specific symbol or have an idea?
 
 ---
 
-## Widget Previews
+## Widget Preview
 
 ### [`mining/`](./mining)
 
@@ -78,8 +78,6 @@ Controls the current state of the widget. Used to change fill color based on sys
 | `4`            | `#3c3c3c` | ⬛️       | Stopped / Offline      |
 | `5`            | `#dcdcdc` | ◻️       | Disconnected / Unknown |
 
----
-
 #### `_pn_indicationMode` (Number)
 
 Controls how the visual indication is rendered:
@@ -87,3 +85,17 @@ Controls how the visual indication is rendered:
 - `0`: Fill only (default)
 - `1`: Stroke only
 - `2`: Fill + Stroke
+
+---
+
+### [`static-symbols/`](./static-symbols)
+
+These are **non-interactive, static SVG symbols** that can be used as visual decorations or layout elements in your dashboards. They do not respond to `_pn_setState` or any dynamic binding.
+
+| Widget       | Preview                          |
+|--------------|----------------------------------|
+| stone-left   | ![](static-symbols/stone-left.svg)   |
+| stone-pile   | ![](static-symbols/stone-pile.svg)   |
+| stone-right  | ![](static-symbols/stone-right.svg)  |
+
+---
