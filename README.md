@@ -19,7 +19,7 @@ This library helps you build visually rich dashboards using categorized, ready-t
 1. **Download or Clone this Repository**
 
    ```bash
-   git clone https://github.com/yourusername/fuxa-widget-library.git
+   git clone https://github.com/carlbomsdata/fuxa-widget-library.git
    ```
 
 2. **Locate the FUXA Widgets Folder**
