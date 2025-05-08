@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alarm History</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      padding: 10px;
+      background-color: #f3f3f3;
+      border-bottom: 1px solid #ccc;
+      gap: 8px;
+    }
+
+    .toolbar button {
+      padding: 6px 12px;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .btn-green {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .btn-blue {
+      background-color: #2196F3;
+      color: white;
+    }
+
+    .btn-gray {
+      background-color: #e0e0e0;
+      color: black;
+    }
+
+    .time-range {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    input[type="datetime-local"] {
+      padding: 4px;
+    }
+
+    .table-container {
+      max-width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 800px;
+    }
+
+    thead {
+      background-color: #333;
+      color: #fff;
+    }
+
+    th, td {
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    @media (max-width: 768px) {
+      table {
+        font-size: 14px;
+      }
+
+      th, td {
+        padding: 10px;
+      }
+
+      .toolbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="toolbar">
+    <button class="btn-green" onclick="exportCSV()">Export CSV</button>
+    <button class="btn-blue" onclick="refresh()">Refresh</button>
+
+    <div class="time-range">
+      <label for="fromTime">From:</label>
+      <input id="fromTime" type="datetime-local" />
+    </div>
+
+    <div class="time-range">
+      <label for="toTime">To:</label>
+      <input id="toTime" type="datetime-local" />
+    </div>
+
+    <button class="btn-blue" onclick="loadAlarmsFromInputs()">Go</button>
+
+    <button class="btn-gray" onclick="setRange(1)">1H</button>
+    <button class="btn-gray" onclick="setRange(8)">8H</button>
+    <button class="btn-gray" onclick="setRange(24)">24H</button>
+    <button class="btn-gray" onclick="setRange(168)">7D</button>
+  </div>
+
+  <div class="table-container">
+    <table id="alarmTable">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Status</th>
+          <th>Text</th>
+          <th>Group</th>
+          <th>On Time</th>
+          <th>Off Time</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script>
+    let currentRange = 24; // default 24 hours
+    let endTime = Date.now();
+
+    function pad(n) {
+      return n < 10 ? '0' + n : n;
+    }
+
+    function toDatetimeLocalString(ms) {
+      const d = new Date(ms);
+      return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    }
+
+    function setRange(hours) {
+      currentRange = hours;
+      endTime = Date.now();
+      loadAlarms();
+    }
+
+    function refresh() {
+      endTime = Date.now();
+      loadAlarms();
+    }
+
+    function loadAlarmsFromInputs() {
+      const fromInput = document.getElementById('fromTime').value;
+      const toInput = document.getElementById('toTime').value;
+
+      if (!fromInput || !toInput) {
+        alert("Please select both From and To dates.");
+        return;
+      }
+
+      const from = new Date(fromInput).getTime();
+      const to = new Date(toInput).getTime();
+
+      if (from >= to) {
+        alert("From time must be before To time.");
+        return;
+      }
+
+      endTime = to;
+      currentRange = (to - from) / (1000 * 60 * 60);
+      loadAlarms(from, to);
+    }
+
+    async function loadAlarms(from, to) {
+      if (from === undefined || to === undefined) {
+        to = endTime;
+        from = to - currentRange * 60 * 60 * 1000;
+      }
+
+      document.getElementById('fromTime').value = toDatetimeLocalString(from);
+      document.getElementById('toTime').value = toDatetimeLocalString(to);
+
+      const resp = await window.parent.fuxaScriptAPI.getAlarmsHistory(from, to);
+      const tbody = document.querySelector("#alarmTable tbody");
+      tbody.innerHTML = '';
+
+      resp.forEach(alarm => {
+        const on = new Date(alarm.ontime).toLocaleString();
+        const off = new Date(alarm.offtime).toLocaleString();
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${alarm.name}</td>
+          <td>${alarm.type}</td>
+          <td>${alarm.status}</td>
+          <td>${alarm.text}</td>
+          <td>${alarm.group}</td>
+          <td>${on}</td>
+          <td>${off}</td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function exportCSV() {
+      const rows = [["Name", "Type", "Status", "Text", "Group", "On Time", "Off Time"]];
+      const tbody = document.querySelector("#alarmTable tbody");
+
+      for (const row of tbody.rows) {
+        const cols = [...row.cells].map(cell => `"${cell.textContent.trim()}"`);
+        rows.push(cols);
+      }
+
+      const csvContent = rows.map(e => e.join(",")).join("\n");
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `alarm_history_${new Date().toISOString().split('T')[0]}.csv`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    loadAlarms(); // Initial load
+  </script>
+
+</body>
+</html>
