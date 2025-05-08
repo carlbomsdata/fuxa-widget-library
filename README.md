@@ -6,7 +6,6 @@ This library contains a collection of SVG-based multi-state symbols specifically
 
 ## Folder Overview
 
-- [`iframes/`](./iframes) – Custom iframe-based widgets.
 - [`mining/`](./mining) – Multi-state symbols for mining systems (e.g. conveyors, crushers).
 - [`static-symbols/`](./static-symbols) – Static SVG graphics for general use.
 
