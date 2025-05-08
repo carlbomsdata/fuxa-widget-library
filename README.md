@@ -2,6 +2,8 @@
 
 This library contains a collection of SVG-based multi-state symbols specifically designed for use in [FUXA](https://github.com/frangoteam/FUXA) industrial HMI/SCADA dashboards — focused on mining and material handling processes.
 
+![ScreenRecording2025-05-08at21 38 00-ezgif com-video-to-gif-converter](https://github.com/user-attachments/assets/bb1bec0a-026e-40fa-a703-fa9469eb1723)
+
 ---
 
 ## Folder Overview
