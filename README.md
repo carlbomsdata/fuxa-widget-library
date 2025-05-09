@@ -8,8 +8,9 @@ This library contains a collection of SVG-based multi-state symbols specifically
 
 ## Folder Overview
 
-- [`mining/`](./mining) – Multi-state symbols for mining systems (e.g. conveyors, crushers).
-- [`static-symbols/`](./static-symbols) – Static SVG graphics for general use.
+- [`mining/`](./mining) – Multi-state widgets for mining systems (e.g. conveyors, crushers).
+- [`alarm-history/`](./alarm-history) – A interactive Alarm History Widget.
+- [`static-symbols/`](./static-symbols) – Static SVG widgets for general use.
 
 ---
 
@@ -98,5 +99,37 @@ These are **non-interactive, static SVG symbols** that can be used as visual dec
 | stone-left   | ![](static-symbols/stone-left.svg)   |
 | stone-pile   | ![](static-symbols/stone-pile.svg)   |
 | stone-right  | ![](static-symbols/stone-right.svg)  |
+
+---
+
+### [`alarm-history/`](./alarm-history)
+
+The alarm-history widget displays a historical log of alarm events in a clean, tabular format. It supports filtering by date and time range, data export to CSV, and refreshing live data.
+
+<img width="1306" alt="Skärmavbild 2025-05-09 kl  09 00 57" src="https://github.com/user-attachments/assets/a8a00eb7-2c71-469c-a4d2-de1d8cbef697" />
+
+#### Installation
+
+1. **Place the widget folder**  
+   Copy the entire `alarm-history` folder into your FUXA server under:
+   ```
+   /server/_widgets/
+   ```
+
+2. **Add it in FUXA**  
+   In the FUXA editor:
+   - Add an **iframe** component to your view.
+   - Set the `URL` to:
+     ```
+     http://<your-node-red-ip>:1881/_widgets/alarm-history/alarmhistory.html
+     ```
+
+     _Example_:  
+     `http://172.31.0.251:1881/_widgets/alarm-history/alarmhistory.html`
+
+3. **Enable Alarm History API**  
+   Go to:  
+   **Setup → Frontend Scripts**  
+   and make sure to **activate** the `$getAlarmsHistory` function.
 
 ---
